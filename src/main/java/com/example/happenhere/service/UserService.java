@@ -25,12 +25,12 @@ public class UserService {
     }
 
     public Optional<RegistrationDTO> registerUser(RegistrationDTO registrationDTO) {
-        if(userRepository.existsByEmail(registrationDTO.email())) {
+        if(userRepository.existsByEmail(registrationDTO.getEmail())) {
             return Optional.empty();
         }
 
         UserEntity userEntity = modelMapper.map(registrationDTO, UserEntity.class);
-        userEntity.setPassword(passwordEncoder.encode(registrationDTO.password()));
+        userEntity.setPassword(passwordEncoder.encode(registrationDTO.getPassword()));
 
         userRepository.save(userEntity);
         return Optional.of(registrationDTO);
