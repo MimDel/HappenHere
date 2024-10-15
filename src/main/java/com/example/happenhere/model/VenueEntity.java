@@ -1,36 +1,36 @@
 package com.example.happenhere.model;
 
 import jakarta.persistence.*;
+import jakarta.validation.constraints.Email;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import lombok.ToString;
 
-import java.util.List;
-
 @Entity
-@Table(name = "users")
+@Table(name = "venues")
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
 @ToString
-public class UserEntity {
+public class VenueEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
 
     @Column(nullable = false)
-    private String firstName;
+    private String name;
 
     @Column(nullable = false)
-    private String lastName;
-
-    @Column(nullable = false, unique = true)
-    private String email;
+    private String address;
 
     @Column(nullable = false)
-    private String password;
+    private String phoneNumber;
 
-    @OneToMany(mappedBy = "owner")
-    private List<VenueEntity> venues;
+    private String type;
+
+    private String description;
+
+    @ManyToOne
+    private UserEntity owner;
 }
