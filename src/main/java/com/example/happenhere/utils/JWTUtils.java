@@ -22,7 +22,7 @@ public class JWTUtils {
 
     public boolean validateToken(String token, String username) {
         var decodedToken = JWT.decode(token);
-        return decodedToken.getSubject().equals(username) && decodedToken.getExpiresAt().before(new Date(System.currentTimeMillis()));
+        return decodedToken.getSubject().equals(username) && decodedToken.getExpiresAt().after(new Date(System.currentTimeMillis()));
     }
     public String getUsernameFromToken(String token) {
         return JWT.decode(token).getSubject();

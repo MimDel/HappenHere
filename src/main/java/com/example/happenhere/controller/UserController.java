@@ -1,5 +1,6 @@
 package com.example.happenhere.controller;
 
+import com.auth0.jwt.JWT;
 import com.example.happenhere.dto.JWTDTO;
 import com.example.happenhere.dto.LoginDTO;
 import com.example.happenhere.dto.MessageResponseDTO;
@@ -7,6 +8,7 @@ import com.example.happenhere.dto.RegistrationDTO;
 import com.example.happenhere.service.UserService;
 import com.example.happenhere.utils.JWTUtils;
 import jakarta.validation.Valid;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -16,10 +18,13 @@ import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
+import java.security.Principal;
+import java.util.Date;
 import java.util.Optional;
 
 @RestController
 @RequestMapping("/user/")
+@Slf4j
 public class UserController {
     private final UserService userService;
     private final AuthenticationManager authenticationManager;
@@ -61,7 +66,7 @@ public class UserController {
     }
 
     @GetMapping("/test")
-    public ResponseEntity<Void> test() {
+    public ResponseEntity<Void> test(Principal principal) {
         return ResponseEntity.ok().build();
     }
 }
