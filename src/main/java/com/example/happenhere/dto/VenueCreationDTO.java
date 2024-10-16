@@ -24,8 +24,7 @@ public class VenueCreationDTO implements Serializable {
 
     //todo add address class
     @NotNull
-    @NotBlank(message = "You need to specify the venue address")
-    private String address;
+    private AddressDTO address;
 
     @NotNull
     @NotBlank(message = "You need to specify the venue phoneNumber")

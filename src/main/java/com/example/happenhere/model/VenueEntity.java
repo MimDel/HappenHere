@@ -21,8 +21,8 @@ public class VenueEntity {
     @Column(nullable = false)
     private String name;
 
-    @Column(nullable = false)
-    private String address;
+    @OneToOne(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+    private AddressEntity address;
 
     @Column(nullable = false)
     private String phoneNumber;
