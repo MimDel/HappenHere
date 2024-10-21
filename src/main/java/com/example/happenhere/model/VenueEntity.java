@@ -7,12 +7,11 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 import lombok.ToString;
 
+import java.util.List;
+
 @Entity
 @Table(name = "venues")
 @Data
-@NoArgsConstructor
-@AllArgsConstructor
-@ToString
 public class VenueEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
@@ -33,4 +32,7 @@ public class VenueEntity {
 
     @ManyToOne
     private UserEntity owner;
+
+    @OneToMany(mappedBy = "venue", cascade = CascadeType.ALL)
+    private List<EventEntity> events;
 }

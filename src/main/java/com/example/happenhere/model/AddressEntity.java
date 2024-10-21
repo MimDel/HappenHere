@@ -8,11 +8,8 @@ import lombok.NoArgsConstructor;
 import lombok.ToString;
 
 @Entity
-@Table(name = "address")
+@Table(name = "addresses")
 @Data
-@NoArgsConstructor
-@AllArgsConstructor
-@ToString
 public class AddressEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)

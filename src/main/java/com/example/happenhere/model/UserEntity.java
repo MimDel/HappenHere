@@ -11,9 +11,6 @@ import java.util.List;
 @Entity
 @Table(name = "users")
 @Data
-@NoArgsConstructor
-@AllArgsConstructor
-@ToString
 public class UserEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
@@ -33,4 +30,7 @@ public class UserEntity {
 
     @OneToMany(mappedBy = "owner", cascade = CascadeType.ALL)
     private List<VenueEntity> venues;
+
+    @OneToMany(mappedBy = "ticketOwner")
+    private List<TicketEntity> tickets;
 }
