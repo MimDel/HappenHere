@@ -28,20 +28,20 @@ public class VenueController {
                                                           BindingResult bindingResult, Principal principal) {
         if(bindingResult.hasErrors()) {
             return ResponseEntity.badRequest().body(
-                    new MessageResponseDTO(bindingResult.getAllErrors().get(0).getDefaultMessage()));
+                    new MessageResponseDTO(400, bindingResult.getAllErrors().get(0).getDefaultMessage()));
         }
 
         venueService.createVenue(venueCreationDTO, principal.getName());
-        return ResponseEntity.ok(new MessageResponseDTO("Venue created"));
+        return ResponseEntity.ok(new MessageResponseDTO(200, "Venue created"));
     }
 
     @DeleteMapping("/{id}")
     public ResponseEntity<MessageResponseDTO> deleteVenue(@PathVariable long id) {
          boolean isDeleted = venueService.delete(id);
          if(!isDeleted) {
-             return ResponseEntity.badRequest().body(new MessageResponseDTO("Venue to be deleted not found"));
+             return ResponseEntity.notFound().build();
          }
-         return ResponseEntity.ok(new MessageResponseDTO("Venue deleted"));
+         return ResponseEntity.ok(new MessageResponseDTO(200,"Venue deleted"));
     }
 
     @GetMapping("/{id}")

@@ -10,9 +10,6 @@ import lombok.ToString;
 import java.io.Serializable;
 
 @Data
-@NoArgsConstructor
-@AllArgsConstructor
-@ToString
 public class VenueCreationDTO implements Serializable {
 
     @NotNull(message = "The name of the venue cat'n be null")
@@ -22,7 +19,6 @@ public class VenueCreationDTO implements Serializable {
     @Email(message = "email is invalid")
     private String email;
 
-    //todo add address class
     @NotNull
     private AddressDTO address;
 
@@ -35,7 +31,4 @@ public class VenueCreationDTO implements Serializable {
     @Size(max = 100)
     @NotBlank(message = "You need to specify the venue type")
     private String type;
-
-    private UserEntity owner;
-
 }

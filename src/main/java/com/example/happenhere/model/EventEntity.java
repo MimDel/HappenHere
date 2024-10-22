@@ -24,18 +24,18 @@ public class EventEntity {
     @Column
     private String description;
 
-    @Column
+    @Column(nullable = false)
     private BigDecimal price;
 
-    @Column(nullable = false)
+    @Column
     private Integer maxQuantity;
 
     @OneToMany(mappedBy = "event")
     private List<TicketEntity> tickets;
 
-    @Column
+    @Column(nullable = false)
     private LocalDateTime startingDate;
-    @Column
+    @Column(nullable = false)
     private LocalDateTime endingDate;
 
     @ManyToOne

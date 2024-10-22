@@ -10,7 +10,6 @@ import lombok.NoArgsConstructor;
 import java.io.Serializable;
 
 @Data
-@NoArgsConstructor
 public class RegistrationDTO implements Serializable {
     @NotNull(message = "email can't be null")
     @Email(message = "email is invalid")

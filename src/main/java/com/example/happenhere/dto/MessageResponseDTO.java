@@ -5,6 +5,6 @@ import lombok.Data;
 
 import java.io.Serializable;
 
-public record MessageResponseDTO(String message) implements Serializable {
+public record MessageResponseDTO(Integer status, String message) implements Serializable {
 
 }

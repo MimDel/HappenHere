@@ -41,15 +41,15 @@ public class UserController {
                                                        BindingResult bindingResult) {
         if (bindingResult.hasErrors()) {
             return ResponseEntity.badRequest().body(
-                    new MessageResponseDTO(bindingResult.getAllErrors().get(0).getDefaultMessage()));
+                    new MessageResponseDTO(400,bindingResult.getAllErrors().get(0).getDefaultMessage()));
         }
         Optional<RegistrationDTO> optionalRegistrationDTO = userService.registerUser(registrationDTO);
 
         if (optionalRegistrationDTO.isEmpty()) {
-            return ResponseEntity.badRequest().body(new MessageResponseDTO("User registration failed"));
+            return ResponseEntity.badRequest().body(new MessageResponseDTO(400,"User registration failed"));
         }
 
-        return ResponseEntity.ok(new MessageResponseDTO("User registration successful"));
+        return ResponseEntity.ok(new MessageResponseDTO(200,"User registration successful"));
     }
 
     @PostMapping("login")
