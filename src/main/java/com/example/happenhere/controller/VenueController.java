@@ -36,7 +36,7 @@ public class VenueController {
     }
 
     @DeleteMapping("/{id}")
-    public ResponseEntity<MessageResponseDTO> deleteVenue(@PathVariable long id) {
+    public ResponseEntity<MessageResponseDTO> deleteVenue(@PathVariable Long id) {
          boolean isDeleted = venueService.delete(id);
          if(!isDeleted) {
              return ResponseEntity.notFound().build();
@@ -45,7 +45,7 @@ public class VenueController {
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<VenueDTO> getVenue(@PathVariable long id) {
+    public ResponseEntity<VenueDTO> getVenue(@PathVariable Long id) {
         Optional<VenueDTO> venueDTO = venueService.getVenue(id);
         if(venueDTO.isEmpty()) {
             return ResponseEntity.notFound().build();

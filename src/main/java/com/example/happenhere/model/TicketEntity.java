@@ -22,4 +22,6 @@ public class TicketEntity {
     private LocalDateTime dateBought;
 
     private boolean refundable;
+
+
 }
