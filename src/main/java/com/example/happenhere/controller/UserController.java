@@ -8,6 +8,7 @@ import com.example.happenhere.dto.RegistrationDTO;
 import com.example.happenhere.service.UserService;
 import com.example.happenhere.utils.JWTUtils;
 import jakarta.validation.Valid;
+import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
@@ -25,16 +26,11 @@ import java.util.Optional;
 @RestController
 @RequestMapping("/user/")
 @Slf4j
+@AllArgsConstructor
 public class UserController {
     private final UserService userService;
     private final AuthenticationManager authenticationManager;
     private final JWTUtils jwtUtils;
-
-    public UserController(UserService userService, AuthenticationManager authenticationManager, JWTUtils jwtUtils){
-        this.userService = userService;
-        this.authenticationManager = authenticationManager;
-        this.jwtUtils = jwtUtils;
-    }
 
     @PostMapping("register")
     public ResponseEntity<MessageResponseDTO> register(@Valid @RequestBody RegistrationDTO registrationDTO,

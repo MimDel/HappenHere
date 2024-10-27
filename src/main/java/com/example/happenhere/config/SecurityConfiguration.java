@@ -1,6 +1,7 @@
 package com.example.happenhere.config;
 
 import com.example.happenhere.filter.AuthFilter;
+import lombok.AllArgsConstructor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -15,13 +16,9 @@ import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 
 @Configuration
+@AllArgsConstructor
 public class SecurityConfiguration {
     private AuthFilter authFilter;
-
-    public SecurityConfiguration(AuthFilter authFilter) {
-        this.authFilter = authFilter;
-    }
-
 
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {

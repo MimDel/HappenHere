@@ -9,25 +9,19 @@ import com.example.happenhere.repository.AddressRepository;
 import com.example.happenhere.repository.UserRepository;
 import com.example.happenhere.repository.VenueRepository;
 import jakarta.transaction.Transactional;
+import lombok.AllArgsConstructor;
 import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Service;
 
 import java.util.Optional;
 
 @Service
+@AllArgsConstructor
 public class VenueService {
     private final VenueRepository venueRepository;
     private final AddressRepository addressRepository;
     private final UserRepository userRepository;
     private final ModelMapper modelMapper;
-
-    public VenueService(VenueRepository venueRepository, UserRepository userRepository,
-                        ModelMapper modelMapper, AddressRepository addressRepository) {
-        this.venueRepository = venueRepository;
-        this.modelMapper = modelMapper;
-        this.userRepository = userRepository;
-        this.addressRepository = addressRepository;
-    }
 
     @Transactional
     public void createVenue(VenueCreationDTO venueCreationDTO, String principal) {

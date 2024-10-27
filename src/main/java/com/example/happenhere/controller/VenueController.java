@@ -6,6 +6,7 @@ import com.example.happenhere.dto.VenueDTO;
 import com.example.happenhere.model.VenueEntity;
 import com.example.happenhere.service.VenueService;
 import jakarta.validation.Valid;
+import lombok.AllArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
@@ -16,12 +17,9 @@ import java.util.Optional;
 
 @RestController
 @RequestMapping("/venue/")
+@AllArgsConstructor
 public class VenueController {
     public final VenueService venueService;
-
-    public VenueController(VenueService venueService) {
-        this.venueService = venueService;
-    }
 
     @PostMapping("/create")
     public ResponseEntity<MessageResponseDTO> createVenue(@Valid @RequestBody VenueCreationDTO venueCreationDTO,
