@@ -1,11 +1,8 @@
-package com.example.happenhere.dto;
+package com.example.happenhere.dto.common;
 
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
-import jakarta.validation.constraints.Size;
-import lombok.AllArgsConstructor;
 import lombok.Data;
-import lombok.NoArgsConstructor;
 
 import java.io.Serializable;
 
@@ -23,9 +20,9 @@ public class AddressDTO implements Serializable {
     private String town;
 
     @NotNull
-    private String county;
+    private String country;
 
     @NotNull
-    @Size(min = 4, max = 4, message = "The postcode should be 4 digits.")
+    @NotBlank
     private String postcode;
 }

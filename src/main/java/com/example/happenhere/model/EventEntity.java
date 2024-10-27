@@ -21,7 +21,7 @@ public class EventEntity {
     @Column(nullable = false)
     private String name;
 
-    @Column
+    @Column(length = 10000)
     private String description;
 
     @Column(nullable = false)
@@ -35,7 +35,7 @@ public class EventEntity {
 
     @Column(nullable = false)
     private LocalDateTime startingDate;
-    @Column(nullable = false)
+    @Column()
     private LocalDateTime endingDate;
 
     @ManyToOne
@@ -45,5 +45,5 @@ public class EventEntity {
     @JoinTable(name = "events_categories",
     joinColumns = @JoinColumn(name = "events_id"),
     inverseJoinColumns = @JoinColumn(name = "categories_id"))
-    private Set<CategoryEntity> categories;
+    private List<CategoryEntity> categories;
 }

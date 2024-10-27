@@ -1,6 +1,4 @@
-package com.example.happenhere.dto;
+package com.example.happenhere.dto.response;
 
-//todo
 public record LoginDTO(String email, String password) {
-
 }

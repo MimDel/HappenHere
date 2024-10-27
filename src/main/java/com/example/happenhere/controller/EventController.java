@@ -1,17 +1,15 @@
 package com.example.happenhere.controller;
 
-import com.example.happenhere.dto.EventCreationDTO;
-import com.example.happenhere.dto.EventDTO;
-import com.example.happenhere.dto.MessageResponseDTO;
+import com.example.happenhere.dto.request.EventCreationDTO;
+import com.example.happenhere.dto.response.EventDTO;
+import com.example.happenhere.dto.response.MessageResponseDTO;
 import com.example.happenhere.service.EventService;
 import jakarta.validation.Valid;
 import org.springframework.http.ResponseEntity;
-import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
 import java.security.Principal;
-import java.util.Optional;
 
 @RestController
 @RequestMapping("/event/")

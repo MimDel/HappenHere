@@ -1,5 +1,6 @@
-package com.example.happenhere.dto;
+package com.example.happenhere.dto.response;
 
+import com.example.happenhere.dto.common.CategoryDTO;
 import lombok.Data;
 
 import java.io.Serializable;

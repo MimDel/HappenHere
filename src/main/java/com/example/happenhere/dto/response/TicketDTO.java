@@ -1,4 +1,4 @@
-package com.example.happenhere.dto;
+package com.example.happenhere.dto.response;
 
 import lombok.Data;
 

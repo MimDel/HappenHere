@@ -32,4 +32,8 @@ public class CategoryEntity {
     public int hashCode() {
         return Objects.hashCode(name);
     }
+
+    public CategoryEntity(String name) {
+        this.name = name;
+    }
 }

@@ -1,15 +1,13 @@
-package com.example.happenhere.dto;
+package com.example.happenhere.dto.request;
 
-import com.example.happenhere.model.TicketEntity;
+import com.example.happenhere.dto.common.CategoryDTO;
 import jakarta.validation.constraints.Future;
-import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 import lombok.Data;
 
 import java.io.Serializable;
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
-import java.util.List;
 import java.util.Set;
 
 @Data

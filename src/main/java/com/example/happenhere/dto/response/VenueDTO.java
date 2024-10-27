@@ -1,9 +1,8 @@
-package com.example.happenhere.dto;
+package com.example.happenhere.dto.response;
 
-import jakarta.validation.constraints.NotNull;
-import lombok.AllArgsConstructor;
+import com.example.happenhere.dto.common.AddressDTO;
+import com.example.happenhere.dto.common.OwnerDTO;
 import lombok.Data;
-import lombok.NoArgsConstructor;
 
 import java.io.Serializable;
 

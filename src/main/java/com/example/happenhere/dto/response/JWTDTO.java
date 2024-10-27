@@ -1,3 +1,3 @@
-package com.example.happenhere.dto;
+package com.example.happenhere.dto.response;
 
 public record JWTDTO(String username, String token) {}

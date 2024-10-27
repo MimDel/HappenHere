@@ -11,6 +11,7 @@ import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 @Service
 @AllArgsConstructor
@@ -19,8 +20,8 @@ public class UserDetailsServiceImpl implements UserDetailsService {
 
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-        UserEntity user = userRepository.findByEmail(username);
-        if (user == null) {
+        Optional<UserEntity> user = userRepository.findByEmail(username);
+        if (user.isEmpty()) {
             throw new UsernameNotFoundException("User with email not found: " + username);
         }
 
@@ -28,8 +29,8 @@ public class UserDetailsServiceImpl implements UserDetailsService {
         simpleGrantedAuthorities.add(new SimpleGrantedAuthority("USER"));
 
         return new org.springframework.security.core.userdetails.User(
-                user.getEmail(),
-                user.getPassword(),
+                user.get().getEmail(),
+                user.get().getPassword(),
                 simpleGrantedAuthorities
         );
     }

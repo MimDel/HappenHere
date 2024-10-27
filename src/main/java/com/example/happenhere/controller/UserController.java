@@ -1,17 +1,15 @@
 package com.example.happenhere.controller;
 
-import com.auth0.jwt.JWT;
-import com.example.happenhere.dto.JWTDTO;
-import com.example.happenhere.dto.LoginDTO;
-import com.example.happenhere.dto.MessageResponseDTO;
-import com.example.happenhere.dto.RegistrationDTO;
+import com.example.happenhere.dto.response.JWTDTO;
+import com.example.happenhere.dto.response.LoginDTO;
+import com.example.happenhere.dto.response.MessageResponseDTO;
+import com.example.happenhere.dto.request.RegistrationDTO;
 import com.example.happenhere.service.UserService;
 import com.example.happenhere.utils.JWTUtils;
 import jakarta.validation.Valid;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
@@ -19,8 +17,6 @@ import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
-import java.security.Principal;
-import java.util.Date;
 import java.util.Optional;
 
 @RestController
@@ -61,8 +57,4 @@ public class UserController {
         return ResponseEntity.ok(new JWTDTO(userDetails.getUsername(), jwt));
     }
 
-    @GetMapping("/test")
-    public ResponseEntity<Void> test(Principal principal) {
-        return ResponseEntity.ok().build();
-    }
 }

@@ -9,4 +9,5 @@ import java.util.Optional;
 @Repository
 public interface VenueRepository extends JpaRepository<VenueEntity, Long> {
     boolean existsById(Long id);
+    Optional<VenueEntity> findByPhoneNumber(String phoneNumber);
 }

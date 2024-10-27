@@ -1,11 +1,8 @@
-package com.example.happenhere.dto;
+package com.example.happenhere.dto.request;
 
-import com.example.happenhere.model.UserEntity;
+import com.example.happenhere.dto.common.AddressDTO;
 import jakarta.validation.constraints.*;
-import lombok.AllArgsConstructor;
 import lombok.Data;
-import lombok.NoArgsConstructor;
-import lombok.ToString;
 
 import java.io.Serializable;
 

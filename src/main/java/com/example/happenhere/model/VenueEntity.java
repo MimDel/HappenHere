@@ -23,11 +23,12 @@ public class VenueEntity {
     @OneToOne(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     private AddressEntity address;
 
-    @Column(nullable = false)
+    @Column(nullable = false, unique = true)
     private String phoneNumber;
 
     private String type;
 
+    @Column(length = 10000)
     private String description;
 
     @ManyToOne

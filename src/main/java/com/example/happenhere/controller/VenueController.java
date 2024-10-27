@@ -1,14 +1,12 @@
 package com.example.happenhere.controller;
 
-import com.example.happenhere.dto.MessageResponseDTO;
-import com.example.happenhere.dto.VenueCreationDTO;
-import com.example.happenhere.dto.VenueDTO;
-import com.example.happenhere.model.VenueEntity;
+import com.example.happenhere.dto.response.MessageResponseDTO;
+import com.example.happenhere.dto.request.VenueCreationDTO;
+import com.example.happenhere.dto.response.VenueDTO;
 import com.example.happenhere.service.VenueService;
 import jakarta.validation.Valid;
 import lombok.AllArgsConstructor;
 import org.springframework.http.ResponseEntity;
-import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 

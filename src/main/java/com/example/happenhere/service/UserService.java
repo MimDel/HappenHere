@@ -1,18 +1,18 @@
 package com.example.happenhere.service;
 
-import com.example.happenhere.dto.RegistrationDTO;
+import com.example.happenhere.dto.request.RegistrationDTO;
 import com.example.happenhere.model.UserEntity;
 import com.example.happenhere.repository.UserRepository;
-import jakarta.validation.constraints.Email;
-import jakarta.validation.constraints.NotNull;
+import com.example.happenhere.utils.LogMessages;
 import lombok.AllArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.modelmapper.ModelMapper;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
-import org.springframework.web.bind.annotation.PostMapping;
 
 import java.util.Optional;
 
+@Slf4j
 @Service
 @AllArgsConstructor
 public class UserService {
@@ -30,5 +30,17 @@ public class UserService {
 
         userRepository.save(userEntity);
         return Optional.of(registrationDTO);
+    }
+
+    public void seedUsers() {
+        if (userRepository.count() == 0) {
+            log.info(LogMessages.DB_INITIALIZING, "users");
+            UserEntity userEntity = new UserEntity();
+            userEntity.setFirstName("User");
+            userEntity.setLastName("Userov");
+            userEntity.setEmail("user@gmail.com");
+            userEntity.setPassword(passwordEncoder.encode("password"));
+            userRepository.save(userEntity);
+        }
     }
 }

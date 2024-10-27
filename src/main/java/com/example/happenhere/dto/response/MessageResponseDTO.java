@@ -1,7 +1,4 @@
-package com.example.happenhere.dto;
-
-import lombok.AllArgsConstructor;
-import lombok.Data;
+package com.example.happenhere.dto.response;
 
 import java.io.Serializable;
 

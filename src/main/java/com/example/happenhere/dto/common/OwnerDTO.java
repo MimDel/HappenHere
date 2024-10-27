@@ -1,8 +1,6 @@
-package com.example.happenhere.dto;
+package com.example.happenhere.dto.common;
 
-import lombok.AllArgsConstructor;
 import lombok.Data;
-import lombok.NoArgsConstructor;
 
 import java.io.Serializable;
 
