@@ -28,7 +28,7 @@ public class VenueController {
         }
 
         venueService.createVenue(venueCreationDTO, principal.getName());
-        return ResponseEntity.ok(new MessageResponseDTO(200, "Venue created"));
+        return ResponseEntity.status(201).body(new MessageResponseDTO(201, "Venue created"));
     }
 
     @DeleteMapping("/{id}")

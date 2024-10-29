@@ -39,9 +39,6 @@ public class UserControllerTest {
     UserService userService;
     @MockBean
     DbInit dbInit;
-    @Qualifier("resourceHandlerMapping")
-    @Autowired
-    private HandlerMapping resourceHandlerMapping;
 
     private final Gson gson = new Gson();
 
@@ -53,7 +50,7 @@ public class UserControllerTest {
         String password = "password@gmail.com";
         RegistrationDTO registrationDTO = new RegistrationDTO(email, password, "Test", "Testov");
 
-        mockMvc.perform(post("http://localhost.com/user/register")
+        mockMvc.perform(post("/user/register")
                         .contentType(MediaType.APPLICATION_JSON)
                         .content(gson.toJson(registrationDTO)))
                 .andExpect(status().isOk());
@@ -70,7 +67,7 @@ public class UserControllerTest {
         userService.seedUsers();
         RegistrationDTO registrationDTO = new RegistrationDTO("user@gmail.com", "password", "user", "userov");
 
-        mockMvc.perform(post("http://localhost.com/user/register")
+        mockMvc.perform(post("/user/register")
                         .contentType(MediaType.APPLICATION_JSON)
                         .content(gson.toJson(registrationDTO)))
                 .andExpect(status().isBadRequest());

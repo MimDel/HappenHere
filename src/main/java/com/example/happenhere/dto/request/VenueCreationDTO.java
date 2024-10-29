@@ -2,11 +2,15 @@ package com.example.happenhere.dto.request;
 
 import com.example.happenhere.dto.common.AddressDTO;
 import jakarta.validation.constraints.*;
+import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
 import java.io.Serializable;
 
 @Data
+@NoArgsConstructor
+@AllArgsConstructor
 public class VenueCreationDTO implements Serializable {
 
     @NotNull(message = "The name of the venue cat'n be null")
