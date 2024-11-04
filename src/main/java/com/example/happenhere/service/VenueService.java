@@ -1,6 +1,7 @@
 package com.example.happenhere.service;
 
 import com.example.happenhere.dto.request.VenueCreationDTO;
+import com.example.happenhere.dto.response.MessageResponseDTO;
 import com.example.happenhere.dto.response.VenueDTO;
 import com.example.happenhere.model.AddressEntity;
 import com.example.happenhere.model.UserEntity;
@@ -16,6 +17,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Service;
 
+import java.security.Principal;
 import java.util.Optional;
 
 @Slf4j
@@ -36,7 +38,6 @@ public class VenueService {
         if (userEntity.isEmpty()) {
             log.error(LogMessages.USER_EMAIL_NOT_FOUND, principalEmail);
             return;
-
         }
 
 
@@ -52,12 +53,19 @@ public class VenueService {
     }
 
 
-    public boolean delete(long id) {
-        if(venueRepository.existsById(id)) {
-            venueRepository.deleteById(id);
-            return true;
+    public MessageResponseDTO delete(long id, Principal principal) {
+        Optional<VenueEntity> venueEntity = venueRepository.findById(id);
+        if (venueEntity.isEmpty()) {
+            return new MessageResponseDTO(404, "Venue not found");
         }
-        return false;
+
+        var owner = venueEntity.get().getOwner();
+        if(!owner.getEmail().equals(principal.getName())) {
+           return new MessageResponseDTO(403, "You are not owner of this venue");
+        }
+
+        venueRepository.deleteById(id);
+        return new MessageResponseDTO(200, "Venue deleted");
     }
 
 
@@ -99,6 +107,7 @@ public class VenueService {
             monkeyHouse.setDescription("Born of the high concentration of amazing musicians in the area, The Monkey House has since built the Burlington music scene into a given tour stop for many up-and-coming bands both local and international. Through work with folks like Waking Windows, Angioplasty Media, MSR Presents, Tick Tick, Anthill Collective, & Green Mountain Cabaret, The Monkey has filled the calendar with bands, DJs, comedians and live multimedia almost every night of the week. ");
             monkeyHouse.setPhoneNumber("8888888888");
             monkeyHouse.setType("Bar");
+            monkeyHouse.setEmail("monkeyhouse@gmail.com");
 
             VenueEntity champlainExpo = new VenueEntity();
             champlainExpo.setAddress(champlainExpoAddress);
@@ -106,6 +115,7 @@ public class VenueService {
             champlainExpo.setName("Champlain Valley Exposition");
             champlainExpo.setPhoneNumber("9999999999");
             champlainExpo.setDescription("At the Champlain Valley Exposition, we pride ourselves on flexibility. If you imagine it, we can make it happen.");
+            champlainExpo.setEmail("champ@gmail.com");
             champlainExpo.setOwner(user.get());
 
             champlainExpo.setOwner(user.get());

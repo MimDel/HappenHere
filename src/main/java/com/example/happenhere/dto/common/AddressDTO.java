@@ -17,7 +17,6 @@ public class AddressDTO implements Serializable {
     @NotBlank
     private String addressLine1;
 
-    @NotBlank
     private String addressLine2;
 
     @NotNull

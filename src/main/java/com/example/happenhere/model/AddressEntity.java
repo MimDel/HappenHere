@@ -7,6 +7,8 @@ import lombok.*;
 @Entity
 @Table(name = "addresses")
 @Data
+@NoArgsConstructor
+@AllArgsConstructor
 public class AddressEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)

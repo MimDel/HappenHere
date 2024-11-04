@@ -2,6 +2,7 @@ package com.example.happenhere.model;
 
 import jakarta.persistence.*;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
 import java.util.Objects;
 import java.util.Set;
@@ -9,6 +10,7 @@ import java.util.Set;
 @Entity
 @Table(name = "categories")
 @Data
+@NoArgsConstructor
 public class CategoryEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)

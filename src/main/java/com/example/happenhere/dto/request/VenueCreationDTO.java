@@ -1,6 +1,7 @@
 package com.example.happenhere.dto.request;
 
 import com.example.happenhere.dto.common.AddressDTO;
+import jakarta.validation.Valid;
 import jakarta.validation.constraints.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -21,6 +22,7 @@ public class VenueCreationDTO implements Serializable {
     private String email;
 
     @NotNull
+    @Valid
     private AddressDTO address;
 
     @NotNull

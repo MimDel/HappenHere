@@ -1,6 +1,7 @@
 package com.example.happenhere.dto.request;
 
 import com.example.happenhere.dto.common.CategoryDTO;
+import jakarta.validation.Valid;
 import jakarta.validation.constraints.Future;
 import jakarta.validation.constraints.NotNull;
 import lombok.Data;
@@ -33,6 +34,7 @@ public class EventCreationDTO implements Serializable {
     @NotNull
     @Future(message = "The starting date of the event should be after the current date.")
     private LocalDateTime endingDate;
+
 
     private Set<CategoryDTO> categories;
 

@@ -44,8 +44,6 @@ public class UserControllerTest {
 
     @Test
     void registerSuccess() throws Exception {
-        Gson gson = new Gson();
-
         String email = "user@gmail.com";
         String password = "password@gmail.com";
         RegistrationDTO registrationDTO = new RegistrationDTO(email, password, "Test", "Testov");
@@ -87,7 +85,6 @@ public class UserControllerTest {
         mockMvc.perform(post("http://localhost.com/user/login")
                 .contentType(MediaType.APPLICATION_JSON)
                 .content(gson.toJson(loginDTO))
-                .accept(MediaType.APPLICATION_JSON)
         ).andExpect(status().isOk());
     }
 
@@ -101,7 +98,7 @@ public class UserControllerTest {
                 .content(gson.toJson(loginDTO)))
                 .andExpect(status().isForbidden());
 
-        loginDTO = new LoginDTO("invalid", "password1");
+        loginDTO = new LoginDTO("invalid", "password");
         mockMvc.perform(post("http://localhost.com/user/login")
                         .contentType(MediaType.APPLICATION_JSON)
                         .content(gson.toJson(loginDTO)))
