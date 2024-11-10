@@ -66,6 +66,7 @@ public class EventService {
 
         List<CategoryEntity> eventCategories = new ArrayList<>();
 
+        //todo do the logic if the category has been already saved in the database
         for (var category : eventCreationDTO.getCategories()) {
             CategoryEntity categoryEntity = modelMapper.map(category, CategoryEntity.class);
             categoryRepository.save(categoryEntity);
@@ -78,7 +79,7 @@ public class EventService {
         eventEntity.setCategories(eventCategories);
 
         eventRepository.save(eventEntity);
-        return new MessageResponseDTO(200, "Event created");
+        return new MessageResponseDTO(201, "Event created");
     }
 
     @Transactional

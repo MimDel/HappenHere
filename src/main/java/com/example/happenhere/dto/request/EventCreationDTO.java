@@ -4,7 +4,9 @@ import com.example.happenhere.dto.common.CategoryDTO;
 import jakarta.validation.Valid;
 import jakarta.validation.constraints.Future;
 import jakarta.validation.constraints.NotNull;
+import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
 import java.io.Serializable;
 import java.math.BigDecimal;
@@ -12,6 +14,8 @@ import java.time.LocalDateTime;
 import java.util.Set;
 
 @Data
+@AllArgsConstructor
+@NoArgsConstructor
 public class EventCreationDTO implements Serializable {
 
     @NotNull(message = "The name of the event can't be null")
