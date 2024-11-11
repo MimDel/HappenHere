@@ -40,7 +40,15 @@ public class UserService {
             userEntity.setLastName("Userov");
             userEntity.setEmail("user@gmail.com");
             userEntity.setPassword(passwordEncoder.encode("password"));
+
+            UserEntity secondUserEntity = new UserEntity();
+            secondUserEntity.setFirstName("Ivan");
+            secondUserEntity.setLastName("Ivanov");
+            secondUserEntity.setEmail("ivan@gmail.com");
+            secondUserEntity.setPassword(passwordEncoder.encode("ivanspassword"));
+
             userRepository.save(userEntity);
+            userRepository.save(secondUserEntity);
         }
     }
 }

@@ -74,7 +74,7 @@ public class UserControllerTest {
                         .contentType(MediaType.APPLICATION_JSON)
                         .content(gson.toJson(registrationDTO)))
                 .andExpect(status().isBadRequest());
-        Assertions.assertEquals(userRepository.count(), 1);
+        Assertions.assertEquals(userRepository.count(), 2);
     }
 
     @Test

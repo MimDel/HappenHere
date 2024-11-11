@@ -139,7 +139,6 @@ public class VenueControllerTest {
                 .andExpect(status().isForbidden());
 
         Assertions.assertEquals(venueRepository.count(), 0);
-
     }
 
     @Test

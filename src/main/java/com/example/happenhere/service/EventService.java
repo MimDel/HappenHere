@@ -61,7 +61,7 @@ public class EventService {
         }
 
         if (!isOwnerOfVenue) {
-            return new MessageResponseDTO(401, "Venue is not owned by the user");
+            return new MessageResponseDTO(403, "Venue is not owned by the user");
         }
 
         List<CategoryEntity> eventCategories = new ArrayList<>();
