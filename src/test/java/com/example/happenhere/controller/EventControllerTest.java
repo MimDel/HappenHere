@@ -1,11 +1,9 @@
 package com.example.happenhere.controller;
 
 import com.example.happenhere.LocalDateTimeAdapter;
-import com.example.happenhere.dto.common.AddressDTO;
 import com.example.happenhere.dto.common.CategoryDTO;
 import com.example.happenhere.dto.request.EventCreationDTO;
-import com.example.happenhere.dto.request.VenueCreationDTO;
-import com.example.happenhere.dto.response.LoginDTO;
+import com.example.happenhere.dto.request.LoginDTO;
 import com.example.happenhere.init.DbInit;
 import com.example.happenhere.model.VenueEntity;
 import com.example.happenhere.repository.CategoryRepository;
@@ -14,7 +12,6 @@ import com.example.happenhere.repository.UserRepository;
 import com.example.happenhere.repository.VenueRepository;
 import com.example.happenhere.service.UserService;
 import com.example.happenhere.service.VenueService;
-import com.fasterxml.jackson.datatype.jsr310.ser.LocalDateTimeSerializer;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import jakarta.transaction.Transactional;
@@ -26,7 +23,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
-import org.springframework.context.annotation.Bean;
 import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.MockMvc;
 

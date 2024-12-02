@@ -1,7 +1,7 @@
 package com.example.happenhere.controller;
 
 import com.example.happenhere.dto.request.RegistrationDTO;
-import com.example.happenhere.dto.response.LoginDTO;
+import com.example.happenhere.dto.request.LoginDTO;
 import com.example.happenhere.init.DbInit;
 import com.example.happenhere.model.UserEntity;
 import com.example.happenhere.repository.UserRepository;
@@ -11,14 +11,12 @@ import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.http.MediaType;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.test.web.servlet.MockMvc;
-import org.springframework.web.servlet.HandlerMapping;
 
 import java.util.Optional;
 

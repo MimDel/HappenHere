@@ -2,10 +2,8 @@ package com.example.happenhere.controller;
 
 import com.example.happenhere.dto.common.AddressDTO;
 import com.example.happenhere.dto.request.VenueCreationDTO;
-import com.example.happenhere.dto.response.LoginDTO;
+import com.example.happenhere.dto.request.LoginDTO;
 import com.example.happenhere.init.DbInit;
-import com.example.happenhere.model.AddressEntity;
-import com.example.happenhere.model.UserEntity;
 import com.example.happenhere.model.VenueEntity;
 import com.example.happenhere.repository.AddressRepository;
 import com.example.happenhere.repository.UserRepository;

@@ -1,7 +1,7 @@
 package com.example.happenhere.controller;
 
 import com.example.happenhere.dto.response.JWTDTO;
-import com.example.happenhere.dto.response.LoginDTO;
+import com.example.happenhere.dto.request.LoginDTO;
 import com.example.happenhere.dto.response.MessageResponseDTO;
 import com.example.happenhere.dto.request.RegistrationDTO;
 import com.example.happenhere.service.UserService;
