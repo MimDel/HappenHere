@@ -1,6 +1,8 @@
 package com.example.happenhere.service;
 
 
+import com.example.happenhere.dto.common.FilterDTO;
+import com.example.happenhere.dto.enums.SortEnum;
 import com.example.happenhere.dto.request.EventCreationDTO;
 import com.example.happenhere.dto.response.EventDTO;
 import com.example.happenhere.dto.response.MessageResponseDTO;
@@ -10,6 +12,7 @@ import com.example.happenhere.utils.LogMessages;
 import jakarta.transaction.Transactional;
 import lombok.extern.slf4j.Slf4j;
 import org.modelmapper.ModelMapper;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import java.math.BigDecimal;
@@ -168,5 +171,19 @@ public class EventService {
             eventRepository.save(openMicMusic);
             eventRepository.save(demolitionDerby);
         }
+    }
+
+    public List<EventDTO> getEvents(int page, int size, FilterDTO filterDTO, SortEnum sort) {
+        return eventRepository.findWithFiltersAndSort(
+                filterDTO.getCity(),
+                filterDTO.getCountry(),
+                filterDTO.getCategories(),
+                filterDTO.getDateFrom(),
+                filterDTO.getDateTo(),
+                filterDTO.getPriceFrom(),
+                filterDTO.getPriceTo(),
+                sort.name(),
+                Pageable.ofSize(size).withPage(page)
+        ).map(eventEntity -> modelMapper.map(eventEntity, EventDTO.class)).toList();
     }
 }
