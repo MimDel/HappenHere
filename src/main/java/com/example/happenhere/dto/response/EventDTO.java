@@ -14,7 +14,7 @@ public class EventDTO implements Serializable {
     private String name;
     private String description;
     private BigDecimal price;
-    private Integer maxQuantity;
+    private Integer maxNumberOfTickets;
     private LocalDateTime startingTime;
     private LocalDateTime endingTime;
     private Long venueId;

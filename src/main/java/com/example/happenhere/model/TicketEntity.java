@@ -20,8 +20,4 @@ public class TicketEntity {
     private UserEntity ticketOwner;
 
     private LocalDateTime dateBought;
-
-    private boolean refundable;
-
-
 }

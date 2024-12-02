@@ -1,6 +1,7 @@
 package com.example.happenhere.service;
 
 
+import com.example.happenhere.dto.common.CategoryDTO;
 import com.example.happenhere.dto.common.FilterDTO;
 import com.example.happenhere.dto.request.EventCreationDTO;
 import com.example.happenhere.dto.response.EventDTO;
@@ -60,9 +61,9 @@ public class EventService {
 
         List<CategoryEntity> eventCategories = new ArrayList<>();
 
-        //todo do the logic if the category has been already saved in the database
-        for (var category : eventCreationDTO.getCategories()) {
-            CategoryEntity categoryEntity = modelMapper.map(category, CategoryEntity.class);
+        for (CategoryDTO category : eventCreationDTO.getCategories()) {
+            CategoryEntity categoryEntity = categoryRepository.findByName(category.getName())
+                    .orElse(modelMapper.map(category, CategoryEntity.class));
             categoryRepository.save(categoryEntity);
             eventCategories.add(categoryEntity);
         }
@@ -208,7 +209,7 @@ public class EventService {
 
     private EventEntity createEvent(String name, String description, List<CategoryEntity> categories,
                                     LocalDateTime startingDate, LocalDateTime endingDate,
-                                    VenueEntity venue, BigDecimal price, int maxQuantity) {
+                                    VenueEntity venue, BigDecimal price, int maxNumberOfTickets) {
         EventEntity event = new EventEntity();
         event.setName(name);
         event.setDescription(description);
@@ -217,7 +218,7 @@ public class EventService {
         event.setEndingDate(endingDate);
         event.setVenue(venue);
         event.setPrice(price);
-        event.setMaxNumberOfTickets(maxQuantity);
+        event.setMaxNumberOfTickets(maxNumberOfTickets);
         return event;
     }
 

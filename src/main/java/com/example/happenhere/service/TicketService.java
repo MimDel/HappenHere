@@ -1,6 +1,7 @@
 package com.example.happenhere.service;
 
 import com.example.happenhere.dto.response.MessageResponseDTO;
+import com.example.happenhere.dto.response.TicketDTO;
 import com.example.happenhere.model.EventEntity;
 import com.example.happenhere.model.TicketEntity;
 import com.example.happenhere.model.UserEntity;
@@ -12,6 +13,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
+import java.util.List;
 import java.util.Optional;
 
 @Service
@@ -34,13 +36,12 @@ public class TicketService {
         if (user.get().getBalance().compareTo(event.get().getPrice()) < 0) {
             return new MessageResponseDTO(400, "Not enough money");
         }
-        if (event.get().getTickets().size() < event.get().getMaxNumberOfTickets()) {
+        if (event.get().getTickets().size() >= event.get().getMaxNumberOfTickets()) {
             return new MessageResponseDTO(400, "No more tickets available");
         }
         TicketEntity ticket = new TicketEntity();
         ticket.setEvent(event.get());
         ticket.setTicketOwner(user.get());
-        ticket.setRefundable(event.get().isRefundable());
         ticket.setDateBought(LocalDateTime.now());
 
         ticketRepository.save(ticket);
@@ -67,7 +68,7 @@ public class TicketService {
         if (ticket.isEmpty()) {
             return new MessageResponseDTO(404, "Ticket not found");
         }
-        if (!ticket.get().isRefundable()) {
+        if (!ticket.get().getEvent().isRefundable()) {
             return new MessageResponseDTO(400, "Ticket is not refundable");
         }
         user.get().setBalance(user.get().getBalance().add(event.get().getPrice()));
@@ -77,5 +78,22 @@ public class TicketService {
         userRepository.save(user.get());
         eventRepository.save(event.get());
         return new MessageResponseDTO(200, "Ticket refunded successfully");
+    }
+
+    @Transactional
+    public List<TicketDTO> getTickets(String name) {
+        Optional<UserEntity> user = userRepository.findByEmail(name);
+        if (user.isEmpty()) {
+            return List.of();
+        }
+        return user.get().getTickets()
+                .stream()
+                .map(ticket ->
+                        new TicketDTO(
+                                ticket.getId(),
+                                ticket.getEvent().getId(),
+                                ticket.getDateBought(),
+                                ticket.getEvent().isRefundable()))
+                .toList();
     }
 }

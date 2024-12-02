@@ -60,8 +60,8 @@ public class UserController {
         return ResponseEntity.ok(new JWTDTO(userDetails.getUsername(), jwt));
     }
 
-    @GetMapping("/id")
-    public ResponseEntity<UserDTO> getUser(@RequestParam Long id) {
+    @GetMapping("/{id}")
+    public ResponseEntity<UserDTO> getUser(@PathVariable Long id) {
          Optional<UserDTO> user = userService.getUser(id);
          return user.map(ResponseEntity::ok).orElseGet(() -> ResponseEntity.notFound().build());
     }
