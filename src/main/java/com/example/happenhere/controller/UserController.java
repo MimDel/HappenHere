@@ -17,6 +17,8 @@ import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
+import java.math.BigDecimal;
+import java.security.Principal;
 import java.util.Optional;
 
 @RestController
@@ -55,6 +57,16 @@ public class UserController {
         UserDetails userDetails =(UserDetails) authentication.getPrincipal();
         String jwt = jwtUtils.generateToken(userDetails.getUsername());
         return ResponseEntity.ok(new JWTDTO(userDetails.getUsername(), jwt));
+    }
+
+    @PostMapping("deposit")
+    public ResponseEntity<MessageResponseDTO> deposit(@RequestParam BigDecimal amount, Principal principal) {
+        return ResponseEntity.status(501).build();
+    }
+
+    @PostMapping("withdraw")
+    public ResponseEntity<MessageResponseDTO> withdraw(@RequestParam BigDecimal amount, Principal principal) {
+        return ResponseEntity.status(501).build();
     }
 
 }

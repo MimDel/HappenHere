@@ -10,6 +10,7 @@ import org.modelmapper.ModelMapper;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import java.math.BigDecimal;
 import java.util.Optional;
 
 @Slf4j
@@ -27,6 +28,7 @@ public class UserService {
 
         UserEntity userEntity = modelMapper.map(registrationDTO, UserEntity.class);
         userEntity.setPassword(passwordEncoder.encode(registrationDTO.getPassword()));
+        userEntity.setBalance(BigDecimal.valueOf(0.0));
 
         userRepository.save(userEntity);
         return Optional.of(registrationDTO);
@@ -40,12 +42,14 @@ public class UserService {
             userEntity.setLastName("Userov");
             userEntity.setEmail("user@gmail.com");
             userEntity.setPassword(passwordEncoder.encode("password"));
+            userEntity.setBalance(BigDecimal.valueOf(100.0));
 
             UserEntity secondUserEntity = new UserEntity();
             secondUserEntity.setFirstName("Ivan");
             secondUserEntity.setLastName("Ivanov");
             secondUserEntity.setEmail("ivan@gmail.com");
             secondUserEntity.setPassword(passwordEncoder.encode("ivanspassword"));
+            secondUserEntity.setBalance(BigDecimal.valueOf(0.0));
 
             userRepository.save(userEntity);
             userRepository.save(secondUserEntity);
