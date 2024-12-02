@@ -8,7 +8,7 @@ import com.example.happenhere.dto.response.MessageResponseDTO;
 import com.example.happenhere.service.EventService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
-import org.springframework.boot.autoconfigure.orm.jpa.JpaBaseConfiguration;
+import org.springframework.data.domain.Pageable;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
@@ -21,7 +21,7 @@ import java.util.List;
 
 
 @RestController
-@RequestMapping("/event/")
+@RequestMapping("/event")
 @RequiredArgsConstructor
 public class EventController {
 
@@ -57,20 +57,19 @@ public class EventController {
 
     @GetMapping
     public ResponseEntity<List<EventDTO>> getEvents(
-            @RequestParam(required = false, defaultValue = "0") int page,
-            @RequestParam(required = false, defaultValue = "10") int size,
             @RequestParam(required = false) String city,
             @RequestParam(required = false) String country,
             @RequestParam(required = false) String category,
-            @RequestParam(required = false) LocalDate dateFrom,
-            @RequestParam(required = false) LocalDate dateTo,
+            @RequestParam(required = false) LocalDateTime dateFrom,
+            @RequestParam(required = false) LocalDateTime dateTo,
             @RequestParam(required = false) BigDecimal priceFrom,
             @RequestParam(required = false) BigDecimal priceTo,
-            @RequestParam(required = false) SortEnum sort
+            @RequestParam(required = false) String sortBy,
+            Pageable pageable
     ) {
-        FilterDTO filterDTO = new FilterDTO(city, country, category.split(","), dateFrom, dateTo, priceFrom, priceTo);
+        FilterDTO filterDTO = new FilterDTO(city, country, category != null ? category.split(",") : null, dateFrom, dateTo, priceFrom, priceTo);
         return ResponseEntity.ok(eventService.getEvents(
-                page, size, filterDTO, sort
+                pageable, filterDTO, sortBy
         ));
     }
 }
