@@ -2,7 +2,6 @@ package com.example.happenhere.service;
 
 
 import com.example.happenhere.dto.common.FilterDTO;
-import com.example.happenhere.dto.enums.SortEnum;
 import com.example.happenhere.dto.request.EventCreationDTO;
 import com.example.happenhere.dto.response.EventDTO;
 import com.example.happenhere.dto.response.MessageResponseDTO;
@@ -218,7 +217,7 @@ public class EventService {
         event.setEndingDate(endingDate);
         event.setVenue(venue);
         event.setPrice(price);
-        event.setMaxQuantity(maxQuantity);
+        event.setMaxNumberOfTickets(maxQuantity);
         return event;
     }
 
