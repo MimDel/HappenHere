@@ -6,6 +6,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 import lombok.ToString;
 
+import java.math.BigDecimal;
 import java.util.List;
 
 @Entity
@@ -22,6 +23,8 @@ public class UserEntity {
 
     @Column(nullable = false)
     private String lastName;
+    @Column(nullable = false)
+    private BigDecimal balance;
 
     @Column(nullable = false, unique = true)
     private String email;

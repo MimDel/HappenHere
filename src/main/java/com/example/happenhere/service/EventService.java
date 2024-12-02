@@ -1,6 +1,8 @@
 package com.example.happenhere.service;
 
 
+import com.example.happenhere.dto.common.FilterDTO;
+import com.example.happenhere.dto.enums.SortEnum;
 import com.example.happenhere.dto.request.EventCreationDTO;
 import com.example.happenhere.dto.response.EventDTO;
 import com.example.happenhere.dto.response.MessageResponseDTO;
@@ -8,8 +10,12 @@ import com.example.happenhere.model.*;
 import com.example.happenhere.repository.*;
 import com.example.happenhere.utils.LogMessages;
 import jakarta.transaction.Transactional;
+import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.modelmapper.ModelMapper;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import java.math.BigDecimal;
@@ -19,6 +25,7 @@ import java.util.*;
 
 @Slf4j
 @Service
+@RequiredArgsConstructor
 public class EventService {
 
     private final ModelMapper modelMapper;
@@ -26,21 +33,9 @@ public class EventService {
     private final VenueRepository venueRepository;
     private final EventRepository eventRepository;
     private final TicketRepository ticketRepository;
+    private final CategoryService categoryService;
     private final CategoryRepository categoryRepository;
 
-    public EventService(ModelMapper modelMapper,
-                        UserRepository userRepository,
-                        VenueRepository venueRepository,
-                        EventRepository eventRepository,
-                        TicketRepository ticketRepository,
-                        CategoryRepository categoryRepository) {
-        this.modelMapper = modelMapper;
-        this.userRepository = userRepository;
-        this.venueRepository = venueRepository;
-        this.eventRepository = eventRepository;
-        this.ticketRepository = ticketRepository;
-        this.categoryRepository = categoryRepository;
-    }
 
     public MessageResponseDTO createEvent(EventCreationDTO eventCreationDTO,
                                           Principal principal) {
@@ -129,44 +124,116 @@ public class EventService {
             VenueEntity monkeyHouse = venueRepository.findByPhoneNumber("8888888888").orElseThrow(RuntimeException::new);
             VenueEntity champlainExpo = venueRepository.findByPhoneNumber("9999999999").orElseThrow(RuntimeException::new);
 
-            CategoryEntity liveMusicCategory = new CategoryEntity("Live Music");
-            CategoryEntity openMicCategory = new CategoryEntity("Open Mic");
-            CategoryEntity demolitionDerbyCategory = new CategoryEntity("Demolition Derby");
-            CategoryEntity outdoorsCategory = new CategoryEntity("Outdoors");
+            // Create categories
+            CategoryEntity liveMusicCategory = categoryService.saveCategory("Live Music");
+            CategoryEntity openMicCategory = categoryService.saveCategory("Open Mic");
+            CategoryEntity demolitionDerbyCategory = categoryService.saveCategory("Demolition Derby");
+            CategoryEntity outdoorsCategory = categoryService.saveCategory("Outdoors");
+            CategoryEntity comedyCategory = categoryService.saveCategory("Comedy");
+            CategoryEntity techCategory = categoryService.saveCategory("Tech");
+            CategoryEntity gamingCategory = categoryService.saveCategory("Gaming");
 
-            categoryRepository.save(liveMusicCategory);
-            categoryRepository.save(openMicCategory);
-            categoryRepository.save(demolitionDerbyCategory);
-            categoryRepository.save(outdoorsCategory);
+            // Create events
+            EventEntity openMicMusic = createEvent(
+                    "Music Open Mic",
+                    """
+                            Music Open Mic at The Monkey House on the last Tuesday of every month! from 7:00pm to 9:00pm hosted by Mike Paternoster. Free!
+                            There will be no backline. Please bring all the instruments needed to perform.
+                            Each performer gets 10ish minute sets depending on the number of performers.
+                            
+                            Come hang!
+                            """,
+                    List.of(liveMusicCategory, openMicCategory),
+                    LocalDateTime.of(2024, 10, 29, 19, 0),
+                    LocalDateTime.of(2024, 10, 30, 0, 0),
+                    monkeyHouse,
+                    BigDecimal.ZERO,
+                    80
+            );
 
+            EventEntity demolitionDerby = createEvent(
+                    "Demolition Derby",
+                    "Join us for the annual Demolition Derby at the Champlain Valley Fair on Thursday, August 29th, 2024!",
+                    List.of(outdoorsCategory, demolitionDerbyCategory),
+                    LocalDateTime.of(2025, 9, 29, 17, 30),
+                    LocalDateTime.of(2025, 9, 29, 21, 30),
+                    champlainExpo,
+                    BigDecimal.valueOf(15),
+                    500
+            );
 
-            EventEntity openMicMusic = new EventEntity();
-            openMicMusic.setName("Music Open Mic");
-            openMicMusic.setDescription("""
-                    Music Open Mic at The Monkey House on the last Tuesday of every month! from 7:00pm to 9:00pm hosted by Mike Paternoster. Free!
-                    There will be no backline. Please bring all the instruments needed to perform.
-                    Each performer gets 10ish minute sets depending on the number of performers.
-                    
-                    Come hang!
-                    """);
-            openMicMusic.setCategories(List.of(liveMusicCategory, openMicCategory));
-            openMicMusic.setStartingDate(LocalDateTime.of(2024,10,29,19,0));
-            openMicMusic.setEndingDate(LocalDateTime.of(2024,10,30,0,0));
-            openMicMusic.setVenue(monkeyHouse);
-            openMicMusic.setPrice(new BigDecimal(0));
-            openMicMusic.setMaxQuantity(80);
+            EventEntity techWorkshop = createEvent(
+                    "Tech Trends 2024 Workshop",
+                    """
+                            Dive into the latest trends in AI, Blockchain, and Cybersecurity at our interactive workshop. 
+                            Network with industry experts and learn cutting-edge technologies.
+                            """,
+                    List.of(techCategory),
+                    LocalDateTime.of(2024, 12, 5, 10, 0),
+                    LocalDateTime.of(2024, 12, 5, 16, 0),
+                    champlainExpo,
+                    BigDecimal.valueOf(50),
+                    200
+            );
 
-            EventEntity demolitionDerby = new EventEntity();
-            demolitionDerby.setName("Demolition Derby");
-            demolitionDerby.setDescription("Join us for the annual Demolition Derby at the Champlain Valley Fair on Thursday, August 29th, 2024!");
-            demolitionDerby.setCategories(List.of(outdoorsCategory, demolitionDerbyCategory));
-            demolitionDerby.setStartingDate(LocalDateTime.of(2025,9,29,17,30));
-            demolitionDerby.setVenue(champlainExpo);
-            demolitionDerby.setMaxQuantity(500);
-            demolitionDerby.setPrice(BigDecimal.valueOf(15));
+            EventEntity esportsTournament = createEvent(
+                    "Esports Tournament - League of Legends",
+                    """
+                            Join us for an epic esports showdown! Teams from across the region compete for the championship title.
+                            Spectators welcome—live gameplay, commentary, and prizes!
+                            """,
+                    List.of(gamingCategory, techCategory),
+                    LocalDateTime.of(2024, 11, 25, 13, 0),
+                    LocalDateTime.of(2024, 11, 25, 22, 0),
+                    champlainExpo,
+                    BigDecimal.valueOf(20),
+                    300
+            );
+            EventEntity standUpComedyNight = createEvent(
+                    "Stand-Up Comedy Night",
+                    "An evening of laughs with local comedians at The Monkey House! Doors open at 8 PM, show starts at 8:30 PM.",
+                    List.of(comedyCategory),
+                    LocalDateTime.of(2024, 11, 15, 20, 0),
+                    LocalDateTime.of(2024, 11, 15, 23, 0),
+                    monkeyHouse,
+                    BigDecimal.valueOf(10),
+                    100
+            );
 
-            eventRepository.save(openMicMusic);
-            eventRepository.save(demolitionDerby);
+            // Save all events
+            eventRepository.saveAll(List.of(
+                    openMicMusic, demolitionDerby, standUpComedyNight, techWorkshop, esportsTournament
+            ));
         }
+    }
+
+    private EventEntity createEvent(String name, String description, List<CategoryEntity> categories,
+                                    LocalDateTime startingDate, LocalDateTime endingDate,
+                                    VenueEntity venue, BigDecimal price, int maxQuantity) {
+        EventEntity event = new EventEntity();
+        event.setName(name);
+        event.setDescription(description);
+        event.setCategories(categories);
+        event.setStartingDate(startingDate);
+        event.setEndingDate(endingDate);
+        event.setVenue(venue);
+        event.setPrice(price);
+        event.setMaxQuantity(maxQuantity);
+        return event;
+    }
+
+    public List<EventDTO> getEvents(Pageable pageable, FilterDTO filterDTO, String sortBy) {
+        Page<EventEntity> withFiltersAndSort = eventRepository.findWithFiltersAndSort(
+                filterDTO.getCity(),
+                filterDTO.getCountry(),
+                filterDTO.getCategories(),
+                filterDTO.getDateFrom(),
+                filterDTO.getDateTo(),
+                filterDTO.getPriceFrom(),
+                filterDTO.getPriceTo(),
+                sortBy == null ? "DATE_ASC" : sortBy,
+                pageable == null ? PageRequest.of(0, 10) : pageable
+        );
+        return withFiltersAndSort.map(eventEntity -> modelMapper.map(eventEntity, EventDTO.class)).toList();
     }
 }
