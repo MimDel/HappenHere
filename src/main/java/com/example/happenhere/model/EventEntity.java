@@ -5,9 +5,7 @@ import lombok.Data;
 
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
-import java.util.ArrayList;
 import java.util.List;
-import java.util.Set;
 
 @Entity
 @Table(name = "events")
@@ -28,10 +26,12 @@ public class EventEntity {
     private BigDecimal price;
 
     @Column
-    private Integer maxQuantity;
+    private Integer maxNumberOfTickets;
 
     @OneToMany(mappedBy = "event")
     private List<TicketEntity> tickets;
+    @Column(nullable = false)
+    private boolean refundable;
 
     @Column(nullable = false)
     private LocalDateTime startingDate;

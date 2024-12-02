@@ -27,6 +27,7 @@ public class EventCreationDTO implements Serializable {
     private BigDecimal price;
 
     private Integer maxQuantity;
+    private boolean refundable= true;
 
     @NotNull
     private Long venueId;
@@ -38,7 +39,6 @@ public class EventCreationDTO implements Serializable {
     @NotNull
     @Future(message = "The starting date of the event should be after the current date.")
     private LocalDateTime endingDate;
-
 
     private Set<CategoryDTO> categories;
 
