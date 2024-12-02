@@ -1,6 +1,8 @@
 package com.example.happenhere.service;
 
 import com.example.happenhere.dto.request.RegistrationDTO;
+import com.example.happenhere.dto.response.MessageResponseDTO;
+import com.example.happenhere.dto.response.UserDTO;
 import com.example.happenhere.model.UserEntity;
 import com.example.happenhere.repository.UserRepository;
 import com.example.happenhere.utils.LogMessages;
@@ -11,6 +13,7 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.math.BigDecimal;
+import java.security.Principal;
 import java.util.Optional;
 
 @Slf4j
@@ -32,6 +35,45 @@ public class UserService {
 
         userRepository.save(userEntity);
         return Optional.of(registrationDTO);
+    }
+
+    public MessageResponseDTO deposit(BigDecimal amount, Principal principal) {
+       UserEntity userEntity = userRepository.findByEmail(principal.getName()).get();
+
+       if(amount==null || amount.compareTo(BigDecimal.ZERO)<=0) {
+           return new MessageResponseDTO(400, "The amount is not a valid deposit amount");
+       }
+
+       userEntity.setBalance(userEntity.getBalance().add(amount));
+       userRepository.save(userEntity);
+
+       return new MessageResponseDTO(200,"Deposit successful, new balance: " + userEntity.getBalance());
+    }
+
+    public MessageResponseDTO withdraw(BigDecimal amount, Principal principal) {
+        UserEntity userEntity = userRepository.findByEmail(principal.getName()).get();
+
+        if(amount==null || amount.compareTo(BigDecimal.ZERO)<=0) {
+            return new MessageResponseDTO(400, "The amount is not a valid withdrawal amount");
+        }
+
+        if(amount.compareTo(userEntity.getBalance()) > 0){
+            return new MessageResponseDTO(400, "The withdrawal amount exceeds the balance");
+        }
+
+        userEntity.setBalance(userEntity.getBalance().subtract(amount));
+        userRepository.save(userEntity);
+
+        return new MessageResponseDTO(200,"Withdrawal successful, new balance: " + userEntity.getBalance());
+    }
+
+    public Optional<UserDTO> getUser(Long id) {
+        Optional<UserEntity> userEntity = userRepository.findById(id);
+        if(userEntity.isEmpty()) {
+            return Optional.empty();
+        }
+        UserDTO userDTO = modelMapper.map(userEntity.get(), UserDTO.class);
+        return Optional.of(userDTO);
     }
 
     public void seedUsers() {

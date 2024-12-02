@@ -4,6 +4,7 @@ import com.example.happenhere.dto.response.JWTDTO;
 import com.example.happenhere.dto.request.LoginDTO;
 import com.example.happenhere.dto.response.MessageResponseDTO;
 import com.example.happenhere.dto.request.RegistrationDTO;
+import com.example.happenhere.dto.response.UserDTO;
 import com.example.happenhere.service.UserService;
 import com.example.happenhere.utils.JWTUtils;
 import jakarta.validation.Valid;
@@ -59,14 +60,22 @@ public class UserController {
         return ResponseEntity.ok(new JWTDTO(userDetails.getUsername(), jwt));
     }
 
+    @GetMapping("/id")
+    public ResponseEntity<UserDTO> getUser(@RequestParam Long id) {
+         Optional<UserDTO> user = userService.getUser(id);
+         return user.map(ResponseEntity::ok).orElseGet(() -> ResponseEntity.notFound().build());
+    }
+
     @PostMapping("deposit")
     public ResponseEntity<MessageResponseDTO> deposit(@RequestParam BigDecimal amount, Principal principal) {
-        return ResponseEntity.status(501).build();
+        MessageResponseDTO result = userService.deposit(amount, principal);
+        return ResponseEntity.status(result.status()).body(result);
     }
 
     @PostMapping("withdraw")
     public ResponseEntity<MessageResponseDTO> withdraw(@RequestParam BigDecimal amount, Principal principal) {
-        return ResponseEntity.status(501).build();
+       MessageResponseDTO result = userService.withdraw(amount,principal);
+       return ResponseEntity.status(result.status()).body(result);
     }
 
 }
